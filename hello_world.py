@@ -1,13 +1,8 @@
 """
-A super doc with an extremely difficult feature
+A simple hello world module.
 """
 
 
-def hola_function():
-    """
-    Docstring para hola_function
-    """
-    print("Hola Mundo")
-
-
-hola_function()
+def hello_world():
+    """A simple function that returns the string "Hello, World!"."""
+    return "Hello, World!"
