@@ -1,11 +1,8 @@
 """
-Hace la impresion de un saludo
+A simple hello world module.
 """
 
 
-def saludate():
-    """Devuelve el saludo"""
-    print("Hola mundo")
-
-
-saludate()
+def hello_world():
+    """A simple function that returns the string "Hello, World!"."""
+    return "Hello, World!"
