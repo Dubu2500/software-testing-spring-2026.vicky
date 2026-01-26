@@ -1,5 +1,5 @@
 """
-A simple hello world module.
+Un pequeño modulo de hola mundo.
 """
 
 
