@@ -1,0 +1,21 @@
+{
+  "name": "software-testing-spring-2026",
+  "version": "1.0.0",
+  "description": "Software Testing Course - Spring 2026",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint *.js **/*.js --ignore-pattern eslint.config.js",
+    "lint:fix": "eslint *.js **/*.js --ignore-pattern eslint.config.js --fix"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "@eslint/js": "^8.57.0"
+  },
+  "keywords": [
+    "software-testing",
+    "javascript",
+    "education"
+  ],
+  "author": "",
+  "license": "ISC"
+}
