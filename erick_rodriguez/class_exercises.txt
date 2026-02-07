@@ -43,7 +43,7 @@ If the total amount is greater than 500, a 20% discount is applied.
 		-> Compruebo si la función acepta números negativos
 	- Prueba 6: Envio un 100.5, esperaría de respuesta un a 10% discount is applied
 		-> Compruebo si la función acepta números decimales
-
+		
 4. Function that processes user orders in an e-commerce system.
 The function calculates the total price of the items in the order,
 applying different discounts based on the quantity of each item.
