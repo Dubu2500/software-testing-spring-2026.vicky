@@ -1,0 +1,100 @@
+1. Function that checks if a given number is positive, negative, or zero.
+
+	- Prueba 1: Envio un 1, esperaría de respuesta un positive
+	- Prueba 2: Envio un 0, esperaría de respuesta un zero
+	- Prueba 3: Envio un -1, esperaría un negative
+	- Prueba 4: Envio un 1.1, esperaría de respuesta un positive
+		-> Compruebo si acepta números decimales
+	- Prueba 5: Envio un -1.1, esperaría de respuesta un negative
+		-> Compruebo si acepta números decimales negativos
+
+2. Function that validates user passwords.
+The password validation rules are as follows:
+
+The password must be at least 8 characters long.
+The password must contain at least one uppercase letter,
+one lowercase letter, one digit,
+and one special character (!, @, #, $, %, or &).
+
+	- Prueba 1: Envio un Erick19!, esperaría de respuesta un True
+	- Prueba 2: Envio un erick19!, esperaría de respuesta un False
+		-> Ya que no tiene letra mayuscula
+	- Prueba 3: Envio un Erick190, esperaría de respuesta un False
+		-> Ya que no tienen un carácter especial de la lista
+	- Prueba 4: Envio un Erick@#!, esperaría de respuesta un False
+		-> Ya que no tienen ningún digito
+	- Prueba 5: Envio un ERICK19!, esperaría de respuesta un False
+		-> Ya que no tiene letra minúscula
+	- Prueba 6: Envio un Eric19!, esperaría de respuesta un False
+		-> Ya que no tiene letra la longitud necesaria (tiene 7 de longitud)
+
+3. Function that calculates the discount for a customer's purchase based on the total amount.
+The discount rules are as follows:
+
+If the total amount is less than 100, no discount is applied.
+If the total amount is between 100 and 500 (inclusive), a 10% discount is applied.
+If the total amount is greater than 500, a 20% discount is applied.
+
+	- Prueba 1: Envio un 99, esperaría de respuesta un no discount is applied
+	- Prueba 2: Envio un 100, esperaría de respuesta un a 10% discount is applied
+	- Prueba 3: Envio un 500, esperaría de respuesta un a 10% discount is applied
+	- Prueba 4: Envio un 501, esperaría de respuesta un a 20% discount is applied
+	- Prueba 5: Envio un -1, esperaría de respuesta un error
+		-> Compruebo si la función acepta números negativos
+	- Prueba 6: Envio un 100.5, esperaría de respuesta un a 10% discount is applied
+		-> Compruebo si la función acepta números decimales
+		
+4. Function that processes user orders in an e-commerce system.
+The function calculates the total price of the items in the order,
+applying different discounts based on the quantity of each item.
+The discount rules are as follows:
+
+If the quantity of a single item is between 1 and 5 (inclusive), no discount is applied.
+If the quantity of a single item is between 6 and 10 (inclusive), a 5% discount is applied.
+If the quantity of a single item is greater than 10, a 10% discount is applied.
+
+	- Prueba 1: Envio 1, esperaría de respuesta un no discount is applied
+	- Prueba 2: Envio 5, esperaría de respuesta un no discount is applied
+	- Prueba 3: Envio 6, esperaría de respuesta un a 5% discount is applied
+	- Prueba 4: Envio 10, esperaría de respuesta un a 5% discount is applied
+	- Prueba 5: Envio 11, esperaría de respuesta un a 10% discount is applied
+	- Prueba 6: Envio 1.1, esperaría de respuesta un error.
+		-> Compruebo si la función acepta números decimales
+	- Prueba 7: Envio 0, esperaría de respuesta un error.
+		-> Compruebo si la función acepta cero
+	- Prueba 8: Envio -1, esperaría de respuesta un error.
+		-> Compruebo si la función acepta números negativos
+
+5. Function that calculates shipping costs for an online shopping system.
+The function calculates shipping costs based on the total weight of the items
+in the order and the shipping method chosen by the customer.
+The shipping cost rules are as follows:
+
+For standard shipping:
+If the total weight is less than or equal to 5 kg, the cost is $10.
+If the total weight is between 5 and 10 kg (inclusive), the cost is $15.
+If the total weight is greater than 10 kg, the cost is $20.
+
+For express shipping:
+If the total weight is less than or equal to 5 kg, the cost is $20.
+If the total weight is between 5 and 10 kg (inclusive), the cost is $30.
+If the total weight is greater than 10 kg, the cost is $40.
+
+	- Prueba 1: Envio 4 y standard shipping, esperaría de respuesta un 10$
+	- Prueba 2: Envio 5 y standard shipping, esperaría de respuesta un 15$
+	- Prueba 3: Envio 10 y standard shipping, esperaría de respuesta un 15$
+	- Prueba 4: Envio 11 y standard shipping, esperaría de respuesta un 20$
+	- Prueba 5: Envio 4.1 y standard shipping, esperaría de respuesta un 10$
+		-> Compruebo si acepta números decimales
+	- Prueba 6: Envio -1 y standard shipping, esperaría de respuesta un error
+		-> Compruebo si acepta números negativos
+	- Prueba 7: Envio 4 y express shipping, esperaría de respuesta un 20$
+	- Prueba 8: Envio 5 y express shipping, esperaría de respuesta un 30$
+	- Prueba 9: Envio 10 y express shipping, esperaría de respuesta un 30$
+	- Prueba 10: Envio 11 y express shipping, esperaría de respuesta un 40$
+	- Prueba 11: Envio 4.1 y express shipping, esperaría de respuesta un 20$
+		-> Compruebo si acepta números decimales
+	- Prueba 12: Envio -1 y express shipping, esperaría de respuesta un error
+		-> Compruebo si acepta números negativos
+	- Prueba 13: Envio -1 y hola, esperaría de respuesta un error
+		-> Compruebo que hace la función si recibe otro tipo de método de envió
