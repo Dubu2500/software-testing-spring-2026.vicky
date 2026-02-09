@@ -1,4 +1,8 @@
 """
-Simple hello world
+A simple hello world module.
 """
-print("hello world")
+
+
+def hello_world():
+    """A simple function that returns the string "Hello, World!"."""
+    return "Hola Mundo!"
