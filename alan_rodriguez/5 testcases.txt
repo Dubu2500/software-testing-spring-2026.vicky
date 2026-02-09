@@ -1,0 +1,69 @@
+1. Function that checks if a given number is positive, negative, or zero.
+- Test case 1°: 5 Resultado esperado de aceptación
+- Test case 2°: -10 5 Resultado esperado de aceptación
+- Test case 3°: 0 Resultado esperado de aceptación
+- Test case 1°: aA Resultado esperado de rechazo
+
+2. Function that validates user passwords.
+The password validation rules are as follows:
+
+The password must be at least 8 characters long.
+The password must contain at least one uppercase letter,
+one lowercase letter, one digit,
+and one special character (!, @, #, $, %, or &).
+- Test case 1°: Alan12$ Resultado esperado de rechazo, debe ser de al menos 8 characteres
+- Test case 2°: alan123$ Resultado esperado de rechazo, debe haber una mayuscula
+- Test case 3°: ALAN123$ Resultado esperado de rechazo, debe haber una minuscula
+- Test case 4°: Alanqwe$ Resultado esperado de rechazo, debe haber un digito
+- Test case 5°: Alan1234 Resultado esperado de rechazo, debe de tener un caracter especial
+- Test case 6°: Alan123$ Resultado esperado de aceptación
+
+3. Function that calculates the discount for a customer's purchase based on the total amount.
+The discount rules are as follows:
+
+If the total amount is less than 100, no discount is applied.
+If the total amount is between 100 and 500 (inclusive), a 10% discount is applied.
+If the total amount is greater than 500, a 20% discount is applied.
+- Test case 1°: 90 Resultado esperado de rechazo del descuento
+- Test case 2°: 350 Resultado esperado de aplicación de un 10% de descuento
+- Test case 3°: 10000 Resultado esperado del 20% de descuento
+C -10 Resultado esperado de rechazo del descuento 
+
+4. Function that processes user orders in an e-commerce system.
+The function calculates the total price of the items in the order,
+applying different discounts based on the quantity of each item.
+The discount rules are as follows:
+
+If the quantity of a single item is between 1 and 5 (inclusive), no discount is applied.
+If the quantity of a single item is between 6 and 10 (inclusive), a 5% discount is applied.
+If the quantity of a single item is greater than 10, a 10% discount is applied.
+- Test case 1°: Quantity = 5: se espera que no aplique el descuento
+- Test case 2°: Quantity = 8: se espera que se aplique un 5% de descuento
+- Test case 3°: Quantity = 25 se espera que se aplique un 10% de descuento
+- Test case 4°: Quantity = 0: se espera que no se aplique descuento, y que diga que no hay articulos disponibles 
+
+
+5. Function that calculates shipping costs for an online shopping system.
+The function calculates shipping costs based on the total weight of the items
+in the order and the shipping method chosen by the customer.
+The shipping cost rules are as follows:
+
+For standard shipping:
+
+If the total weight is less than or equal to 5 kg, the cost is $10.
+If the total weight is between 5 and 10 kg (inclusive), the cost is $15.
+If the total weight is greater than 10 kg, the cost is $20.
+For express shipping:
+
+If the total weight is less than or equal to 5 kg, the cost is $20.
+If the total weight is between 5 and 10 kg (inclusive), the cost is $30.
+If the total weight is greater than 10 kg, the cost is $40.
+- Test case 1°: Standard shipping y peso = 3kg, se espera que se cobre $10 
+- Test case 2°: Standard shipping y peso = 8kg, se espera que se cobre $15
+- Test case 3°: Standard shipping y peso = 30kg, se espera que se cobre $20
+- Test case 4°: Standard shipping y peso = 0kg, se espera que (no) se cobre $10
+
+- Test case 5°: Express shipping: y peso = 4kg, se espera que se cobre $20
+- Test case 6°: Express shipping: y peso = 10kg, se espera que se cobre $30
+- Test case 7°: Express shipping: y peso = 15kg, se espera que se cobre $40
+- Test case 8°: Express shipping: y peso = 0kg, se espera que (no) se cobre $20
