@@ -5,7 +5,13 @@ White-box unit testing examples.
 """
 import unittest
 
-from white_box.class_exercises import divide, get_grade, is_even, is_triangle
+from white_box.class_exercises import (
+    VendingMachine,
+    divide,
+    get_grade,
+    is_even,
+    is_triangle,
+)
 
 
 class TestWhiteBox(unittest.TestCase):
@@ -84,3 +90,44 @@ class TestWhiteBox(unittest.TestCase):
         Checks the three inputs can't form a triangle when A is greater or equal than B + C.
         """
         self.assertEqual(is_triangle(2, 1, 1), "No, it's not a triangle.")
+
+
+class TestWhiteBoxVendingMachine(unittest.TestCase):
+    """
+    Vending Machine unit tests.
+    """
+
+    # @classmethod
+    # def setUpClass(cls):
+    #    return
+
+    def setUp(self):
+        self.vending_machine = VendingMachine()
+        self.assertEqual(self.vending_machine.state, "Ready")
+
+    # def tearDown(self):
+    #    return
+
+    # @classmethod
+    # def tearDownClass(cls):
+    #    return
+
+    def test_vending_machine_insert_coin_error(self):
+        """
+        Checks the vending machine can accept coins.
+        """
+        self.vending_machine.state = "Dispensing"
+
+        output = self.vending_machine.insert_coin()
+
+        self.assertEqual(self.vending_machine.state, "Dispensing")
+        self.assertEqual(output, "Invalid operation in current state.")
+
+    def test_vending_machine_insert_coin_success(self):
+        """
+        Checks the vending machine fails to accept coins when it's not ready.
+        """
+        output = self.vending_machine.insert_coin()
+
+        self.assertEqual(self.vending_machine.state, "Dispensing")
+        self.assertEqual(output, "Coin Inserted. Select your drink.")
