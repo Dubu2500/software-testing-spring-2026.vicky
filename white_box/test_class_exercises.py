@@ -3,35 +3,38 @@
 """
 White-box unit testing examples.
 """
+# Disable docstring and large-test-class warnings for this test module
+# These tests are intentionally verbose and focused on behavior, not docstrings
+# pylint: disable=missing-function-docstring, too-many-public-methods
 import unittest
 
 from white_box.class_exercises import (
     VendingMachine,
+    authenticate_user,
+    calculate_items_shipping_cost,
+    calculate_order_total,
+    calculate_quantity_discount,
+    calculate_shipping_cost,
+    calculate_total_discount,
+    categorize_product,
+    celsius_to_fahrenheit,
+    check_file_size,
+    check_flight_eligibility,
+    check_loan_eligibility,
+    check_number_status,
     divide,
     get_grade,
+    get_weather_advisory,
+    grade_quiz,
     is_even,
     is_triangle,
-    check_number_status,
-    validate_password,
-    calculate_total_discount,
-    calculate_order_total,
-    calculate_items_shipping_cost,
-    validate_login,
-    verify_age,
-    categorize_product,
-    validate_email,
-    celsius_to_fahrenheit,
     validate_credit_card,
     validate_date,
-    check_flight_eligibility,
+    validate_email,
+    validate_login,
+    validate_password,
     validate_url,
-    calculate_quantity_discount,
-    check_file_size,
-    check_loan_eligibility,
-    calculate_shipping_cost,
-    grade_quiz,
-    authenticate_user,
-    get_weather_advisory,
+    verify_age,
 )
 
 
@@ -186,7 +189,9 @@ class TestWhiteBox(unittest.TestCase):
     def test_calculate_items_shipping_cost_weight_boundaries(self):
         self.assertEqual(calculate_items_shipping_cost([{"weight": 5}], "standard"), 10)
         self.assertEqual(calculate_items_shipping_cost([{"weight": 5}], "express"), 20)
-        self.assertEqual(calculate_items_shipping_cost([{"weight": 10}], "standard"), 15)
+        self.assertEqual(
+            calculate_items_shipping_cost([{"weight": 10}], "standard"), 15
+        )
         self.assertEqual(calculate_items_shipping_cost([{"weight": 10}], "express"), 30)
 
     # 6 validate_login
@@ -385,7 +390,8 @@ class TestWhiteBox(unittest.TestCase):
     # 21 get_weather_advisory
     def test_get_weather_advisory_hot_and_humid(self):
         self.assertEqual(
-            get_weather_advisory(35, 80), "High Temperature and Humidity. Stay Hydrated."
+            get_weather_advisory(35, 80),
+            "High Temperature and Humidity. Stay Hydrated.",
         )
 
     def test_get_weather_advisory_cold(self):
