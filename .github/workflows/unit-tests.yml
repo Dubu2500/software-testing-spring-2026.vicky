@@ -16,4 +16,4 @@ jobs:
       - name: Run tests with coverage
         run: coverage run --branch -m unittest discover
       - name: Check code coverage
-        run: coverage report --fail-under=22 --omit=/usr/lib/python3/*,*/students/*,*/test_*
+        run: coverage report --fail-under=27 --omit=/usr/lib/python3/*,*/students/*,*/test_*

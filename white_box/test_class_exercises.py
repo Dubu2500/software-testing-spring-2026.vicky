@@ -14,9 +14,9 @@ from white_box.class_exercises import (
 )
 
 
-class TestWhiteBox(unittest.TestCase):
+class TestIsEven(unittest.TestCase):
     """
-    White-box unittest class.
+    White-box unittest class for the is_even function.
     """
 
     def test_is_even_with_even_number(self):
@@ -31,6 +31,12 @@ class TestWhiteBox(unittest.TestCase):
         """
         self.assertFalse(is_even(7))
 
+
+class TestDivide(unittest.TestCase):
+    """
+    White-box unittest class for the divide function.
+    """
+
     def test_divide_by_non_zero(self):
         """
         Checks the divide function works as expected.
@@ -42,6 +48,12 @@ class TestWhiteBox(unittest.TestCase):
         Checks the divide function returns 0 when dividing by 0.
         """
         self.assertEqual(divide(10, 0), 0)
+
+
+class TestGetGrade(unittest.TestCase):
+    """
+    White-box unittest class for the get_grade function.
+    """
 
     def test_get_grade_a(self):
         """
@@ -66,6 +78,12 @@ class TestWhiteBox(unittest.TestCase):
         Checks F grade.
         """
         self.assertEqual(get_grade(65), "F")
+
+
+class TestIsTriangle(unittest.TestCase):
+    """
+    White-box unittest class for the is_triangle function.
+    """
 
     def test_is_triangle_yes(self):
         """
