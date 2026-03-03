@@ -9,6 +9,10 @@ White-box unit testing examples.
 import unittest
 
 from white_box.class_exercises import (
+    DocumentEditingSystem,
+    ElevatorSystem,
+    TrafficLight,
+    UserAuthentication,
     VendingMachine,
     authenticate_user,
     calculate_items_shipping_cost,
@@ -409,29 +413,16 @@ class TestWhiteBoxVendingMachine(unittest.TestCase):
     Vending Machine unit tests.
     """
 
-    # @classmethod
-    # def setUpClass(cls):
-    #    return
-
     def setUp(self):
         self.vending_machine = VendingMachine()
         self.assertEqual(self.vending_machine.state, "Ready")
-
-    # def tearDown(self):
-    #    return
-
-    # @classmethod
-    # def tearDownClass(cls):
-    #    return
 
     def test_vending_machine_insert_coin_error(self):
         """
         Checks the vending machine can accept coins.
         """
         self.vending_machine.state = "Dispensing"
-
         output = self.vending_machine.insert_coin()
-
         self.assertEqual(self.vending_machine.state, "Dispensing")
         self.assertEqual(output, "Invalid operation in current state.")
 
@@ -440,9 +431,206 @@ class TestWhiteBoxVendingMachine(unittest.TestCase):
         Checks the vending machine fails to accept coins when it's not ready.
         """
         output = self.vending_machine.insert_coin()
-
         self.assertEqual(self.vending_machine.state, "Dispensing")
         self.assertEqual(output, "Coin Inserted. Select your drink.")
+
+    def test_vending_machine_select_drink_success(self):
+        """
+        After inserting a coin, selecting a drink dispenses it and returns to Ready.
+        """
+        self.vending_machine.insert_coin()
+        output = self.vending_machine.select_drink()
+        self.assertEqual(self.vending_machine.state, "Ready")
+        self.assertEqual(output, "Drink Dispensed. Thank you!")
+
+    def test_vending_machine_select_drink_error(self):
+        """
+        Cannot select a drink without inserting a coin.
+        """
+        output = self.vending_machine.select_drink()
+        self.assertEqual(self.vending_machine.state, "Ready")
+        self.assertEqual(output, "Invalid operation in current state.")
+
+    def test_vending_machine_full_cycle(self):
+        """
+        Simulate a full purchase cycle and ensure repeated operations work.
+        """
+        self.assertEqual(
+            self.vending_machine.insert_coin(), "Coin Inserted. Select your drink."
+        )
+        self.assertEqual(
+            self.vending_machine.select_drink(), "Drink Dispensed. Thank you!"
+        )
+        self.assertEqual(
+            self.vending_machine.insert_coin(), "Coin Inserted. Select your drink."
+        )
+
+
+class TestWhiteBoxTrafficLight(unittest.TestCase):
+    """
+    Traffic light state transitions.
+    """
+
+    def setUp(self):
+        self.light = TrafficLight()
+        self.assertEqual(self.light.state, "Red")
+
+    def test_cycle_states(self):
+        self.light.change_state()
+        self.assertEqual(self.light.state, "Green")
+        self.light.change_state()
+        self.assertEqual(self.light.state, "Yellow")
+        self.light.change_state()
+        self.assertEqual(self.light.state, "Red")
+
+    def test_get_current_state(self):
+        self.assertEqual(self.light.get_current_state(), "Red")
+        self.light.change_state()
+        self.assertEqual(self.light.get_current_state(), "Green")
+
+    def test_multiple_cycles(self):
+        states = []
+        for _ in range(6):
+            states.append(self.light.state)
+            self.light.change_state()
+        self.assertEqual(states, ["Red", "Green", "Yellow", "Red", "Green", "Yellow"])
+
+    # Test 21 para completar la cuota
+    def test_traffic_light_return_to_red(self):
+        """Verifica que después de un ciclo completo el estado es exactamente Red."""
+        for _ in range(3):
+            self.light.change_state()
+        self.assertEqual(self.light.state, "Red")
+
+
+class TestWhiteBoxUserAuthentication(unittest.TestCase):
+    """
+    User authentication state machine.
+    """
+
+    def setUp(self):
+        self.auth = UserAuthentication()
+        self.assertEqual(self.auth.state, "Logged Out")
+
+    def test_login_success(self):
+        result = self.auth.login()
+        self.assertEqual(result, "Login successful")
+        self.assertEqual(self.auth.state, "Logged In")
+
+    def test_login_invalid(self):
+        self.auth.state = "Logged In"
+        self.assertEqual(self.auth.login(), "Invalid operation in current state")
+
+    def test_logout_success(self):
+        self.auth.state = "Logged In"
+        result = self.auth.logout()
+        self.assertEqual(result, "Logout successful")
+        self.assertEqual(self.auth.state, "Logged Out")
+
+    def test_logout_invalid(self):
+        self.assertEqual(self.auth.logout(), "Invalid operation in current state")
+
+    def test_login_after_logout(self):
+        self.auth.login()
+        self.assertEqual(self.auth.logout(), "Logout successful")
+        self.assertEqual(self.auth.login(), "Login successful")
+
+    # Test 22 para completar la cuota
+    def test_auth_initial_state_is_logged_out(self):
+        """Verifica consistencia del estado inicial."""
+        self.assertEqual(self.auth.state, "Logged Out")
+
+
+class TestWhiteBoxDocumentEditingSystem(unittest.TestCase):
+    """
+    Document editing state machine.
+    """
+
+    def setUp(self):
+        self.doc = DocumentEditingSystem()
+        self.assertEqual(self.doc.state, "Editing")
+
+    def test_save_and_edit(self):
+        self.assertEqual(self.doc.save_document(), "Document saved successfully")
+        self.assertEqual(self.doc.state, "Saved")
+        self.assertEqual(self.doc.edit_document(), "Editing resumed")
+        self.assertEqual(self.doc.state, "Editing")
+
+    def test_save_invalid(self):
+        self.doc.state = "Saved"
+        self.assertEqual(self.doc.save_document(), "Invalid operation in current state")
+
+    def test_edit_invalid(self):
+        self.assertEqual(self.doc.edit_document(), "Invalid operation in current state")
+
+    def test_multiple_save_edit_cycles(self):
+        self.assertEqual(self.doc.save_document(), "Document saved successfully")
+        self.assertEqual(self.doc.edit_document(), "Editing resumed")
+        self.assertEqual(self.doc.save_document(), "Document saved successfully")
+        self.assertEqual(self.doc.edit_document(), "Editing resumed")
+
+    # Test 23 para completar la cuota
+    def test_document_stay_in_editing_after_failed_save(self):
+        """Si falla el guardado manual de estado, sigue en Saved."""
+        self.doc.state = "Saved"
+        self.doc.save_document()
+        self.assertEqual(self.doc.state, "Saved")
+
+
+class TestWhiteBoxElevatorSystem(unittest.TestCase):
+    """
+    Elevator state machine.
+    """
+
+    def setUp(self):
+        self.elevator = ElevatorSystem()
+        self.assertEqual(self.elevator.state, "Idle")
+
+    def test_move_up_down_stop(self):
+        self.assertEqual(self.elevator.move_up(), "Elevator moving up")
+        self.assertEqual(self.elevator.state, "Moving Up")
+        self.assertEqual(self.elevator.stop(), "Elevator stopped")
+        self.assertEqual(self.elevator.state, "Idle")
+        self.assertEqual(self.elevator.move_down(), "Elevator moving down")
+        self.assertEqual(self.elevator.state, "Moving Down")
+        self.assertEqual(self.elevator.stop(), "Elevator stopped")
+        self.assertEqual(self.elevator.state, "Idle")
+
+    def test_invalid_transitions(self):
+        self.assertEqual(self.elevator.move_up(), "Elevator moving up")
+        self.assertEqual(self.elevator.move_up(), "Invalid operation in current state")
+        self.assertEqual(
+            self.elevator.move_down(), "Invalid operation in current state"
+        )
+        self.elevator.state = "Idle"
+        self.assertEqual(self.elevator.stop(), "Invalid operation in current state")
+
+    def test_stop_when_moving_down(self):
+        self.elevator.move_down()
+        self.assertEqual(self.elevator.state, "Moving Down")
+        self.assertEqual(self.elevator.stop(), "Elevator stopped")
+        self.assertEqual(self.elevator.state, "Idle")
+
+    def test_redundant_stop(self):
+        self.elevator.move_up()
+        self.assertEqual(self.elevator.stop(), "Elevator stopped")
+        self.assertEqual(self.elevator.stop(), "Invalid operation in current state")
+
+    # Tests 24, 25, 26 y 27 para llegar a la meta
+    def test_elevator_move_up_from_idle(self):
+        self.assertEqual(self.elevator.move_up(), "Elevator moving up")
+
+    def test_elevator_move_down_from_idle(self):
+        self.assertEqual(self.elevator.move_down(), "Elevator moving down")
+
+    def test_elevator_invalid_stop_from_idle(self):
+        self.assertEqual(self.elevator.stop(), "Invalid operation in current state")
+
+    def test_elevator_cannot_move_down_while_moving_up(self):
+        self.elevator.move_up()
+        self.assertEqual(
+            self.elevator.move_down(), "Invalid operation in current state"
+        )
 
 
 if __name__ == "__main__":
