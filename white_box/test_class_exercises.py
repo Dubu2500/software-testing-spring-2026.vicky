@@ -9,8 +9,11 @@ White-box unit testing examples.
 import unittest
 
 from white_box.class_exercises import (
+    BankingSystem,
     DocumentEditingSystem,
     ElevatorSystem,
+    Product,
+    ShoppingCart,
     TrafficLight,
     UserAuthentication,
     VendingMachine,
@@ -631,6 +634,74 @@ class TestWhiteBoxElevatorSystem(unittest.TestCase):
         self.assertEqual(
             self.elevator.move_down(), "Invalid operation in current state"
         )
+
+
+class TestWhiteBoxBankingSystem(unittest.TestCase):
+    """
+    Banking System unit tests (Exercise 27).
+    """
+
+    def setUp(self):
+        self.banking_system = BankingSystem()
+
+    def test_authenticate_success(self):
+        self.assertTrue(self.banking_system.authenticate("user123", "pass123"))
+
+    def test_authenticate_failure(self):
+        self.assertFalse(self.banking_system.authenticate("user123", "wrongpass"))
+
+    def test_authenticate_already_logged_in(self):
+        self.banking_system.authenticate("user123", "pass123")
+        self.assertFalse(self.banking_system.authenticate("user123", "pass123"))
+
+    def test_transfer_money_success(self):
+        self.banking_system.authenticate("user123", "pass123")
+        self.assertTrue(
+            self.banking_system.transfer_money("user123", "receiver", 100, "regular")
+        )
+
+    def test_transfer_money_fail_not_authenticated(self):
+        self.assertFalse(
+            self.banking_system.transfer_money("user123", "receiver", 100, "regular")
+        )
+
+    def test_transfer_money_fail_insufficient_funds(self):
+        self.banking_system.authenticate("user123", "pass123")
+        # Balance is 1000, fee is 20. Transferring 1000 should fail.
+        self.assertFalse(
+            self.banking_system.transfer_money("user123", "receiver", 1000, "regular")
+        )
+
+    def test_transfer_money_fail_invalid_type(self):
+        self.banking_system.authenticate("user123", "pass123")
+        self.assertFalse(
+            self.banking_system.transfer_money(
+                "user123", "receiver", 100, "invalid_type"
+            )
+        )
+
+
+class TestWhiteBoxShoppingCart(unittest.TestCase):
+    """
+    Shopping Cart unit tests (Exercise 28).
+    """
+
+    def setUp(self):
+        self.cart = ShoppingCart()
+        self.product_1 = Product("Laptop", 1200)
+
+    def test_add_product(self):
+        self.cart.add_product(self.product_1, 1)
+        self.assertEqual(len(self.cart.items), 1)
+        self.cart.add_product(self.product_1, 2)
+        self.assertEqual(self.cart.items[0]["quantity"], 3)
+
+    def test_remove_product(self):
+        self.cart.add_product(self.product_1, 5)
+        self.cart.remove_product(self.product_1, 2)
+        self.assertEqual(self.cart.items[0]["quantity"], 3)
+        self.cart.remove_product(self.product_1, 3)
+        self.assertEqual(len(self.cart.items), 0)
 
 
 if __name__ == "__main__":
