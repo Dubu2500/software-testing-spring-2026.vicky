@@ -55,6 +55,9 @@ def add(numbers):
     sufficient enough code do not forget to refactor your code after each passing test.
 
     2. Allow the add method to handle an unknown number of arguments.
+
+    3. Allow the add method to handle newlines as separators, instead of comas.
+    "1,2\n3" should return "6". "2,\n3" is invalid, but no need to clarify it with the program.
     """
     if numbers == "":
         return 0

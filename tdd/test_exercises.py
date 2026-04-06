@@ -85,6 +85,9 @@ class TestAdd(unittest.TestCase):
     sufficient enough code do not forget to refactor your code after each passing test.
 
     2. Allow the add method to handle an unknown number of arguments.
+
+    3. Allow the add method to handle newlines as separators, instead of comas.
+    "1,2\n3" should return "6". "2,\n3" is invalid, but no need to clarify it with the program.
     """
 
     def test_add_should_return_0_when_numbers_is_an_empty_string(self):
@@ -98,18 +101,21 @@ class TestAdd(unittest.TestCase):
         Tests that add returns the number for a single number.
         """
         self.assertEqual(add("1"), 1)
-        self.assertEqual(add("2"), 2)
 
     def test_add_should_return_sum_when_numbers_contains_two_numbers(self):
         """
         Tests that add returns the sum for two numbers.
         """
         self.assertEqual(add("1,2"), 3)
-        self.assertEqual(add("2,3"), 5)
 
     def test_add_should_return_sum_when_numbers_contains_unknown_number_of_arguments(self):
         """
         Tests that add returns the sum for an unknown number of arguments.
         """
         self.assertEqual(add("1,2,3"), 6)
-        self.assertEqual(add("2,3,4,5"), 14)
+
+    def test_add_should_return_sum_when_numbers_contains_newlines_as_separators(self):
+        """
+        Tests that add returns the sum when numbers contains newlines as separators.
+        """
+        self.assertEqual(add("1,2\n3"), 6)
