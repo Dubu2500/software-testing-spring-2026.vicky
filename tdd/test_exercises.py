@@ -122,6 +122,7 @@ class TestAdd(unittest.TestCase):
         Tests that add returns the sum when numbers contains newlines as separators.
         """
         self.assertEqual(add("1,2\n3"), 6)
+        self.assertEqual(add("2,\n3"), 5)
 
     def test_add_should_raise_exception_when_numbers_ends_with_a_separator(self):
         """

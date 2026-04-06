@@ -58,14 +58,17 @@ def add(numbers):
 
     3. Allow the add method to handle newlines as separators, instead of comas.
     "1,2\n3" should return "6". "2,\n3" is invalid, but no need to clarify it with the program.
+
+    4. Add validation to not to allow a separator at the end.
+    For example "1,2," should return an error (or throw an exception).
     """
     if numbers == "":
         return 0
 
     numbers = numbers.replace("\n", ",")
 
-    num_list = numbers.split(",")
-    if len(num_list) == 1:
-        return int(num_list[0])
+    if numbers.endswith(","):
+        raise ValueError("Input string cannot end with a separator.")
 
-    return sum(int(num) for num in num_list)
+    num_list = numbers.split(",")
+    return sum(int(num) if num != "" else 0 for num in num_list)
