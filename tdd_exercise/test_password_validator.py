@@ -19,3 +19,11 @@ class TestPasswordValidator(unittest.TestCase):
         result = pv.validate_password("Abc123!@")
         self.assertTrue(result["valid"])
         self.assertEqual(result["errors"], "")
+
+    def test_at_least_8_characters(self):
+        """
+        2. Metodo que detecta contraseña con menos de 8 caracteres
+        """
+        result = pv.validate_password("Ab1!@")
+        self.assertFalse(result["valid"])
+        self.assertIn("Password must be at least 8 characters", result["errors"])
