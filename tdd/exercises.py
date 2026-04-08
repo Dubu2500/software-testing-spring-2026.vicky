@@ -3,6 +3,8 @@
 """
 Test Driven Development (TDD) exercises.
 """
+import json
+import os
 
 
 def fizzbuzz(num):
@@ -85,26 +87,6 @@ def add(numbers):
     return sum(int(num) if num != "" else 0 for num in num_list)
 
 
-cities = [
-    "Paris",
-    "Budapest",
-    "Skopje",
-    "Rotterdam",
-    "Valencia",
-    "Vancouver",
-    "Amsterdam",
-    "Vienna",
-    "Sydney",
-    "New York City",
-    "London",
-    "Bangkok",
-    "Hong Kong",
-    "Dubai",
-    "Rome",
-    "Istanbul",
-]
-
-
 def search_cities(str_to_search):
     """
     Kata 4 - Search functionality
@@ -133,6 +115,12 @@ def search_cities(str_to_search):
 
     5. If the search text is a "*" (asterisk), then it should return all the city names.
     """
+    # Load cities from JSON file
+    cities_file_path = os.path.join(os.path.dirname(__file__), "cities.json")
+    with open(cities_file_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+        cities = data["cities"]
+
     cities_found = []
 
     # Requirement 5: If search text is "*", return all cities

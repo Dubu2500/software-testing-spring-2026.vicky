@@ -3,9 +3,11 @@
 """
 Test Driven Development (TDD) tests.
 """
+import json
+import os
 import unittest
 
-from tdd.exercises import add, cities, fizzbuzz, search_cities
+from tdd.exercises import add, fizzbuzz, search_cities
 
 
 class TestFizzBuzz(unittest.TestCase):
@@ -191,8 +193,15 @@ class TestSearchCities(unittest.TestCase):
     5. If the search text is a "*" (asterisk), then it should return all the city names.
     """
 
-    def setUp(self):
-        self.test_data = [
+    @classmethod
+    def setUpClass(cls):
+        # Load cities from JSON file
+        cities_file_path = os.path.join(os.path.dirname(__file__), "cities.json")
+        with open(cities_file_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            cities = data["cities"]
+
+        cls.test_data = [
             # Requirement 1: < 2 characters should return no results
             {"input": "", "output": []},
             {"input": "a", "output": []},
