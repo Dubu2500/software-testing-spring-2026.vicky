@@ -35,3 +35,13 @@ class TestPasswordValidator(unittest.TestCase):
         result = pv.validate_password("Abcdefgh1")
         self.assertFalse(result["valid"])
         self.assertIn("The password must contain at least 2 numbers", result["errors"])
+
+    def test_at_least_one_capital_letter(self):
+        """
+        4. Metodo que detecta ausencia de mayuscula
+        """
+        result = pv.validate_password("abcdefgh12!")
+        self.assertFalse(result["valid"])
+        self.assertIn(
+            "password must contain at least one capital letter", result["errors"]
+        )
