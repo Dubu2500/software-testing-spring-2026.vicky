@@ -72,3 +72,21 @@ class TestStringCalculator(unittest.TestCase):
         with self.assertRaises(ValueError) as ctx:
             string_calculator.add("2,-4,-9")
         self.assertEqual(str(ctx.exception), "Negative number(s) not allowed: -4,-9")
+
+    def test_multiple_errors_newline_separated_returns_errors(self):
+        """
+        9. Metodo que retorna multiples errores separados por saltos de linea
+        """
+        with self.assertRaises(ValueError) as ctx:
+            string_calculator.add("//|\n1|2,-3")
+        error_msg = str(ctx.exception)
+        self.assertIn("Negative number(s) not allowed: -3", error_msg)
+        self.assertIn("expected '|' but found ',' at position 3", error_msg)
+        self.assertIn("\n", error_msg)
+
+    def test_ignore_numbers_greater_than_1000_returns_sum(self):
+        """
+        10. Metodo que ignora numeros mayores a 1000 en la suma
+        """
+        self.assertEqual(string_calculator.add("2,1001"), 2)
+        self.assertEqual(string_calculator.add("1000,1001,2"), 1002)
