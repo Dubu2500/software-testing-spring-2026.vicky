@@ -28,4 +28,11 @@ def validate_password(password):
     if not any(character.isupper() for character in password):
         errors.append("password must contain at least one capital letter")
 
+    # 4. Al menos un caracter especial (no alfanumerico)
+    if not any(not character.isalnum() for character in password):
+        errors.append("password must contain at least one special character")
+
+    valid = len(errors) == 0
+    error_msg = "\n".join(errors)
+
     return {"valid": valid, "errors": error_msg}
