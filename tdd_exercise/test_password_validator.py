@@ -45,3 +45,11 @@ class TestPasswordValidator(unittest.TestCase):
         self.assertIn(
             "password must contain at least one capital letter", result["errors"]
         )
+
+    def test_at_least_one_special_character(self):
+        """
+        5. Metodo que detecta ausencia de caracter especial
+        """
+        result = pv.validate_password("Abcdefgh12")
+        self.assertFalse(result["valid"])
+        self.assertIn("password must contain at least one special character", result["errors"])
