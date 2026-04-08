@@ -19,4 +19,9 @@ def validate_password(password):
     valid = len(errors) == 0
     error_msg = "\n".join(errors)
 
+    # 2. Al menos 2 numeros
+    digit_count = sum(1 for character in password if character.isdigit())
+    if digit_count < 2:
+        errors.append("The password must contain at least 2 numbers")
+
     return {"valid": valid, "errors": error_msg}
