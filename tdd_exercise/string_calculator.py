@@ -1,9 +1,13 @@
-
 """
-Este modulo contiene la logica para las pruebas del ejercicio de String Calculator 
+Este modulo contiene la logica para las pruebas del ejercicio de String Calculator
 """
 
-def add():
+
+def add(message):
     """
-    Metodo que recibe un string con numeros, procesa segun los requerimientos de String Calculator y devuelve su suma
+    Recibe un string con numeros y devuelve su suma.
     """
+    # 1. String vacio a 0
+    if message == "":
+        return 0
+    return 0
