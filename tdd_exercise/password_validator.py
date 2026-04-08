@@ -24,4 +24,8 @@ def validate_password(password):
     if digit_count < 2:
         errors.append("The password must contain at least 2 numbers")
 
+    # 3. Al menos una mayuscula
+    if not any(character.isupper() for character in password):
+        errors.append("password must contain at least one capital letter")
+
     return {"valid": valid, "errors": error_msg}
