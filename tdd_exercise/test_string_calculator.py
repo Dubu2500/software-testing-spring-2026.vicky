@@ -52,3 +52,11 @@ class TestStringCalculator(unittest.TestCase):
         self.assertEqual(string_calculator.add("//;\n1;3"), 4)
         self.assertEqual(string_calculator.add("//|\n1|2|3"), 6)
         self.assertEqual(string_calculator.add("//sep\n2sep5"), 7)
+
+    def test_custom_delimiter_invalid_character_returns_exception(self):
+        """
+        7. Metodo que valida caracteres no esperados en el delimitador personalizado
+        """
+        with self.assertRaises(ValueError) as ctx:
+            string_calculator.add("//|\n1|2,3")
+        self.assertEqual(str(ctx.exception), "expected '|' but found ',' at position 3")
