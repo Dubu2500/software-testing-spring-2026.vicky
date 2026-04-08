@@ -36,3 +36,11 @@ class TestStringCalculator(unittest.TestCase):
         4. Metodo que acepta saltos de linea como separadores ademas de comas
         """
         self.assertEqual(string_calculator.add("1\n2,3"), 6)
+
+    def test_no_trailing_separator_returns_exception(self):
+        """
+        5. Metodo que valida que no haya separador al final y lanza excepcion
+        """
+        with self.assertRaises(ValueError) as ctx:
+            string_calculator.add("1,2,")
+        self.assertEqual(str(ctx.exception), "Separator at end not allowed")
