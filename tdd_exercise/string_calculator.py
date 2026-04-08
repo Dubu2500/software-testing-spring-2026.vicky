@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 
 """
-Este modulo contiene la logica para las pruebas del ejercicio de String Calculator
+Este modulo contiene la logica para las pruebas del ejercicio de String Calculator 
 """
 
 import re
 
-
 def add(message):
     """
-    Metodo que recibe un string con numeros,
+    Metodo que recibe un string con numeros, 
     procesa segun los requerimientos de String Calculator y devuelve su suma
     """
 
@@ -35,9 +34,7 @@ def add(message):
             if character.isdigit() or character == delimiter_part:
                 i += 1
             else:
-                errors.append(
-                    f"expected '{delimiter_part}' but found '{character}' at position {i}"
-                )
+                errors.append(f"expected '{delimiter_part}' but found '{character}' at position {i}")
                 break
 
     # 4. Validar separador al final
@@ -53,17 +50,19 @@ def add(message):
     for item in raw_numbers:
         if item == "":
             continue
-        if not item.lstrip("-").isdigit():
+        if not item.lstrip('-').isdigit():
             errors.append(f"Invalid number: '{item}'")
             continue
         num = int(item)
         if num < 0:
             negatives.append(num)
+        elif num <= 1000:
+            integers.append(num)
 
     # 6. Numeros negativos no permitidos
     if negatives:
-        errors.append(
-            f"Negative number(s) not allowed: {','.join(map(str, negatives))}"
-        )
+        errors.append(f"Negative number(s) not allowed: {','.join(map(str, negatives))}")
 
-    return sum(integers)
+    # 7. Multiples errores separados por newline
+    if errors:
+        raise ValueError("\n".join(errors))
