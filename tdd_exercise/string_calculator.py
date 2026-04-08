@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Este modulo contiene la logica para las pruebas del ejercicio de String Calculator 
+Este modulo contiene la logica para las pruebas del ejercicio de String Calculator
 """
 
 import re
