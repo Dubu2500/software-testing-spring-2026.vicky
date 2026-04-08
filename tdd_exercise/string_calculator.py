@@ -29,4 +29,8 @@ def add(message):
         if not item.lstrip("-").isdigit():
             errors.append(f"Invalid number: '{item}'")
 
+    # 4. Validar separador al final
+    if re.search(rf"{delimiter}$", numbers_part):
+        errors.append("Separator at end not allowed")
+
     return sum(integers)
