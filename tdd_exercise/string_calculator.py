@@ -22,18 +22,11 @@ def add(message):
     raw_numbers = re.split(delimiter, numbers_part)
 
     integers = []
-    negatives = []
 
     for item in raw_numbers:
         if item == "":
             continue
         if not item.lstrip("-").isdigit():
             errors.append(f"Invalid number: '{item}'")
-            continue
-        num = int(item)
-        if num < 0:
-            negatives.append(num)
-        elif num <= 1000:
-            integers.append(num)
 
     return sum(integers)

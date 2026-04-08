@@ -24,3 +24,9 @@ class TestStringCalculator(unittest.TestCase):
         """
         self.assertEqual(string_calculator.add("1"), 1)
         self.assertEqual(string_calculator.add("1,2"), 3)
+
+    def test_unknown_number_of_arguments_returns_sum(self):
+        """
+        3. Metodo que recibe cantidad indefinida de numeros separados por comas
+        """
+        self.assertEqual(string_calculator.add("1,2,3,4"), 10)
