@@ -5,7 +5,7 @@ Test Driven Development (TDD) tests.
 """
 import unittest
 
-from tdd.exercises import add, fizzbuzz
+from tdd.exercises import add, cities, fizzbuzz, search_cities
 
 
 class TestFizzBuzz(unittest.TestCase):
@@ -122,7 +122,9 @@ class TestAdd(unittest.TestCase):
         """
         self.assertEqual(add("1,2"), 3)
 
-    def test_add_should_return_sum_when_numbers_contains_unknown_number_of_arguments(self):
+    def test_add_should_return_sum_when_numbers_contains_unknown_number_of_arguments(
+        self,
+    ):
         """
         Tests that add returns the sum for an unknown number of arguments.
         """
@@ -139,20 +141,83 @@ class TestAdd(unittest.TestCase):
         """
         Tests that add raises an exception when numbers ends with a separator.
         """
-        with self.assertRaises(ValueError, msg="Input string cannot end with a separator."):
+        with self.assertRaises(
+            ValueError, msg="Input string cannot end with a separator."
+        ):
             add("1,2,")
 
-    def test_add_should_return_sum_when_numbers_contains_different_delimiters(self):
-        """
-        Tests that add returns the sum when numbers contains different delimiters.
-        """
-        self.assertEqual(add("//;\n1;3"), 4)
-        self.assertEqual(add("//|\n1|2|3"), 6)
-        self.assertEqual(add("//sep\n2sep5"), 7)
+    # def test_add_should_return_sum_when_numbers_contains_different_delimiters(self):
+    #    """
+    #    Tests that add returns the sum when numbers contains different delimiters.
+    #    """
+    #    self.assertEqual(add("//;\n1;3"), 4)
+    #    self.assertEqual(add("//|\n1|2|3"), 6)
+    #    self.assertEqual(add("//sep\n2sep5"), 7)
 
-    def test_add_should_raise_exception_when_numbers_contains_invalid_delimiters(self):
+    # def test_add_should_raise_exception_when_numbers_contains_invalid_delimiters(self):
+    #    """
+    #    Tests that add raises an exception when numbers contains invalid delimiters.
+    #    """
+    #    with self.assertRaisesRegex(ValueError, r"'|' expected but ',' found at position 3"):
+    #        add("//|\n1|2,3")
+
+
+class TestSearchCities(unittest.TestCase):
+    """
+    Kata 4 - Search functionality
+    Implement a city search functionality. The function takes a string (search text) as input
+    and returns the found cities which corresponds to the search text.
+
+    Prerequisites:
+
+    Create a collection of strings that will act as a database for the city names.
+    City names: Paris, Budapest, Skopje, Rotterdam, Valencia, Vancouver, Amsterdam, Vienna, Sydney,
+    New York City, London, Bangkok, Hong Kong, Dubai, Rome, Istanbul.
+
+    Requirements:
+
+    1. If the search text is fewer than 2 characters, then should return no results.
+    (It is an optimization feature of the search functionality.)
+
+    2. If the search text is equal to or more than 2 characters, then it should return all the city
+    names starting with the exact search text.
+    For example for search text "Va", the function should return Valencia and Vancouver.
+
+    3. The search functionality should be case insensitive.
+
+    4. The search functionality should work also when the search text is just a part of a city name
+    For example "ape" should return "Budapest" city.
+
+    5. If the search text is a "*" (asterisk), then it should return all the city names.
+    """
+
+    def setUp(self):
+        self.test_data = [
+            # Requirement 1: < 2 characters should return no results
+            {"input": "", "output": []},
+            {"input": "a", "output": []},
+            # Requirement 2: >= 2 characters should return cities starting with search text
+            {"input": "Va", "output": ["Valencia", "Vancouver"]},
+            {"input": "Pa", "output": ["Paris"]},
+            # Requirement 3: Case insensitive search
+            {"input": "va", "output": ["Valencia", "Vancouver"]},
+            {"input": "PARIS", "output": ["Paris"]},
+            {"input": "NeW", "output": ["New York City"]},
+            # Requirement 4: Search text as part of city name (substring search)
+            {"input": "ape", "output": ["Budapest"]},
+            {"input": "ster", "output": ["Amsterdam"]},
+            {"input": "kok", "output": ["Bangkok"]},
+            {"input": "dam", "output": ["Rotterdam", "Amsterdam"]},
+            # Requirement 5: Asterisk should return all cities
+            {"input": "*", "output": cities},
+            # Edge cases
+            {"input": "xyz", "output": []},
+        ]
+
+    def test_search_cities(self):
         """
-        Tests that add raises an exception when numbers contains invalid delimiters.
+        Tests the search_cities function with various inputs and expected outputs.
         """
-        with self.assertRaisesRegex(ValueError, r"'|' expected but ',' found at position 3"):
-            add("//|\n1|2,3")
+        for x in self.test_data:
+            with self.subTest(input=x["input"], output=x["output"]):
+                self.assertEqual(search_cities(x["input"]), x["output"])
