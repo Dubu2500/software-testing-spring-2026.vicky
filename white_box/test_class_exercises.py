@@ -10,6 +10,7 @@ from white_box.class_exercises import (
     BankAccount,
     BankingSystem,
     VendingMachine,
+    calculate_items_shipping_cost,
     calculate_order_total,
     calculate_total_discount,
     check_number_status,
@@ -117,6 +118,7 @@ class TestIsTriangle(unittest.TestCase):
         self.assertEqual(is_triangle(2, 1, 1), "No, it's not a triangle.")
 
 
+# 1
 class TestCheckNumberStatus(unittest.TestCase):
     """
     White-box unittest class for the check_number_status function.
@@ -141,6 +143,7 @@ class TestCheckNumberStatus(unittest.TestCase):
         self.assertEqual(check_number_status(0), "Zero")
 
 
+# 2
 class TestValidatePassword(unittest.TestCase):
     """
     White-box unittest class for the validate_password function.
@@ -189,6 +192,7 @@ class TestValidatePassword(unittest.TestCase):
         self.assertFalse(validate_password("Invalid123?"))
 
 
+# 3
 class TestCalculateTotalDiscount(unittest.TestCase):
     """
     White-box unittest class for the calculate_total_discount function.
@@ -214,6 +218,7 @@ class TestCalculateTotalDiscount(unittest.TestCase):
         self.assertEqual(calculate_total_discount(1000), 200)
 
 
+# 4
 class TestCalculateOrderTotal(unittest.TestCase):
     """
     White-box unittest class for the calculate_order_total function.
@@ -243,6 +248,171 @@ class TestCalculateOrderTotal(unittest.TestCase):
         self.assertEqual(calculate_order_total([]), 0)
 
 
+# 5
+class TestCalculateItemsShippingCost(unittest.TestCase):
+    """
+    White-box unittest class for the calculate_items_shipping_cost function.
+    """
+
+    def test_standard_shipping_low_weight_boundary(self):
+        """
+        Test standard shipping for weight exactly at 5kg boundary.
+        """
+        items = [{"weight": 5}]
+        result = calculate_items_shipping_cost(items, "standard")
+        self.assertEqual(result, 10)
+
+    def test_standard_shipping_medium_weight_low_boundary(self):
+        """
+        Test standard shipping for weight exactly at 10kg boundary.
+        """
+        items = [{"weight": 6}]
+        result = calculate_items_shipping_cost(items, "standard")
+        self.assertEqual(result, 15)
+
+    def test_standard_shipping_medium_weight_high_boundary(self):
+        """
+        Test standard shipping for weight exactly at 10kg boundary.
+        """
+        items = [{"weight": 10}]
+        result = calculate_items_shipping_cost(items, "standard")
+        self.assertEqual(result, 15)
+
+    def test_standard_shipping_heavy_weight_boundary(self):
+        """
+        Test standard shipping for weight exactly at 10kg boundary.
+        """
+        items = [{"weight": 11}]
+        result = calculate_items_shipping_cost(items, "standard")
+        self.assertEqual(result, 20)
+
+    def test_express_shipping_low_weight_boundary(self):
+        """
+        Test express shipping for weight exactly at 5kg boundary.
+        """
+        items = [{"weight": 5}]
+        result = calculate_items_shipping_cost(items, "express")
+        self.assertEqual(result, 20)
+
+    def test_express_shipping_medium_weight_low_boundary(self):
+        """
+        Test express shipping for weight exactly at 10kg boundary.
+        """
+        items = [{"weight": 6}]
+        result = calculate_items_shipping_cost(items, "express")
+        self.assertEqual(result, 30)
+
+    def test_express_shipping_medium_weight_high_boundary(self):
+        """
+        Test express shipping for weight exactly at 10kg boundary.
+        """
+        items = [{"weight": 10}]
+        result = calculate_items_shipping_cost(items, "express")
+        self.assertEqual(result, 30)
+
+    def test_express_shipping_heavy_weight_boundary(self):
+        """
+        Test express shipping for weight exactly at 10kg boundary.
+        """
+        items = [{"weight": 11}]
+        result = calculate_items_shipping_cost(items, "express")
+        self.assertEqual(result, 40)
+
+    def test_empty_items_list_standard(self):
+        """
+        Test with empty items list for standard shipping (total weight = 0).
+        """
+        items = []
+        result = calculate_items_shipping_cost(items, "standard")
+        self.assertEqual(result, 10)
+
+    def test_empty_items_list_express(self):
+        """
+        Test with empty items list for express shipping (total weight = 0).
+        """
+        items = []
+        result = calculate_items_shipping_cost(items, "express")
+        self.assertEqual(result, 20)
+
+    def test_single_item_zero_weight_standard(self):
+        """
+        Test with single item having zero weight for standard shipping.
+        """
+        items = [{"weight": 0}]
+        result = calculate_items_shipping_cost(items, "standard")
+        self.assertEqual(result, 10)
+
+    def test_single_item_zero_weight_express(self):
+        """
+        Test with single item having zero weight for express shipping.
+        """
+        items = [{"weight": 0}]
+        result = calculate_items_shipping_cost(items, "express")
+        self.assertEqual(result, 20)
+
+    def test_multiple_items_various_weights(self):
+        """
+        Test with multiple items with various weights totaling medium range.
+        """
+        items = [{"weight": 2.5}, {"weight": 1.5}, {"weight": 3}]  # total = 7kg
+        result = calculate_items_shipping_cost(items, "standard")
+        self.assertEqual(result, 15)
+
+    def test_weight_boundary_just_over_5kg_standard(self):
+        """
+        Test weight boundary just over 5kg for standard shipping.
+        """
+        items = [{"weight": 5.1}]
+        result = calculate_items_shipping_cost(items, "standard")
+        self.assertEqual(result, 15)
+
+    def test_weight_boundary_just_over_10kg_express(self):
+        """
+        Test weight boundary just over 10kg for express shipping.
+        """
+        items = [{"weight": 10.1}]
+        result = calculate_items_shipping_cost(items, "express")
+        self.assertEqual(result, 40)
+
+    def test_invalid_shipping_method(self):
+        """
+        Test that ValueError is raised for invalid shipping method.
+        """
+        items = [{"weight": 5}]
+        with self.assertRaises(ValueError) as context:
+            calculate_items_shipping_cost(items, "overnight")
+        self.assertEqual(str(context.exception), "Invalid shipping method")
+
+    def test_invalid_shipping_method_empty_string(self):
+        """
+        Test that ValueError is raised for empty string shipping method.
+        """
+        items = [{"weight": 5}]
+        with self.assertRaises(ValueError) as context:
+            calculate_items_shipping_cost(items, "")
+        self.assertEqual(str(context.exception), "Invalid shipping method")
+
+    def test_invalid_shipping_method_none(self):
+        """
+        Test that ValueError is raised for None shipping method.
+        """
+        items = [{"weight": 5}]
+        with self.assertRaises(ValueError) as context:
+            calculate_items_shipping_cost(items, None)
+        self.assertEqual(str(context.exception), "Invalid shipping method")
+
+    def test_case_sensitive_shipping_methods(self):
+        """
+        Test that shipping methods are case-sensitive.
+        """
+        items = [{"weight": 5}]
+        with self.assertRaises(ValueError):
+            calculate_items_shipping_cost(items, "Standard")
+        with self.assertRaises(ValueError):
+            calculate_items_shipping_cost(items, "EXPRESS")
+
+
+# 22
 class TestVendingMachine(unittest.TestCase):
     """
     Vending Machine unit tests.
@@ -283,7 +453,28 @@ class TestVendingMachine(unittest.TestCase):
         self.assertEqual(self.vending_machine.state, "Dispensing")
         self.assertEqual(output, "Coin Inserted. Select your drink.")
 
+    def test_vending_machine_select_drink_error(self):
+        """
+        Checks the vending machine can accept coins.
+        """
+        output = self.vending_machine.select_drink()
 
+        self.assertEqual(self.vending_machine.state, "Ready")
+        self.assertEqual(output, "Invalid operation in current state.")
+
+    def test_vending_machine_select_drink_success(self):
+        """
+        Checks the vending machine fails to accept coins when it's not ready.
+        """
+        self.vending_machine.state = "Dispensing"
+
+        output = self.vending_machine.select_drink()
+
+        self.assertEqual(self.vending_machine.state, "Ready")
+        self.assertEqual(output, "Drink Dispensed. Thank you!")
+
+
+# 27
 class TestBankingAccount(unittest.TestCase):
     """
     Banking account unit tests.
