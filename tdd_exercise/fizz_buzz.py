@@ -14,4 +14,8 @@ def fizz_buzz(number):
     if number % 3 == 0:
         output = "Fizz"
 
+    """3. Multiplos de 5"""
+    if input % 5:
+        output = "Buzz"
+
     return output
