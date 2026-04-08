@@ -14,8 +14,12 @@ def fizz_buzz(number):
     if number % 3 == 0:
         output = "Fizz"
 
-    """3. Multiplos de 5"""
-    if input % 5:
+    # 3. Multiplos de 5
+    if number % 5 == 0:
         output = "Buzz"
+
+    # 4. Multiplos de 3 y 5
+    if number % 3 == 0 and number % 5 == 0:
+        output = "FizzBuzz"
 
     return output
