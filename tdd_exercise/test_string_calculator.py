@@ -30,3 +30,9 @@ class TestStringCalculator(unittest.TestCase):
         3. Metodo que recibe cantidad indefinida de numeros separados por comas
         """
         self.assertEqual(string_calculator.add("1,2,3,4"), 10)
+
+    def test_newline_as_separator_returns_sum(self):
+        """
+        4. Metodo que acepta saltos de linea como separadores ademas de comas
+        """
+        self.assertEqual(string_calculator.add("1\n2,3"), 6)
