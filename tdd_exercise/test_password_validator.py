@@ -27,3 +27,11 @@ class TestPasswordValidator(unittest.TestCase):
         result = pv.validate_password("Ab1!@")
         self.assertFalse(result["valid"])
         self.assertIn("Password must be at least 8 characters", result["errors"])
+
+    def test_at_least_two_numbers(self):
+        """
+        3. Metodo que detecta contraseña con menos de 2 numeros
+        """
+        result = pv.validate_password("Abcdefgh1")
+        self.assertFalse(result["valid"])
+        self.assertIn("The password must contain at least 2 numbers", result["errors"])
