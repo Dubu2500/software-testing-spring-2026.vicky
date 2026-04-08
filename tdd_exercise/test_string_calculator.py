@@ -44,3 +44,11 @@ class TestStringCalculator(unittest.TestCase):
         with self.assertRaises(ValueError) as ctx:
             string_calculator.add("1,2,")
         self.assertEqual(str(ctx.exception), "Separator at end not allowed")
+
+    def test_custom_delimiter_returns_sum(self):
+        """
+        6. Metodo que permite cambiar el delimitador con formato "//X\\n"
+        """
+        self.assertEqual(string_calculator.add("//;\n1;3"), 4)
+        self.assertEqual(string_calculator.add("//|\n1|2|3"), 6)
+        self.assertEqual(string_calculator.add("//sep\n2sep5"), 7)
