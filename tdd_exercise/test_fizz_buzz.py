@@ -38,3 +38,11 @@ class TestFizzBuzz(unittest.TestCase):
         self.assertEqual(fizz_buzz(-5), "Buzz")
         self.assertEqual(fizz_buzz(0), "Buzz")
         self.assertEqual(fizz_buzz(5), "Buzz")
+
+    def test_from_number_multiple_three_five_return_fizz_buzz(self, ):
+        """
+        4. Metodo que recibe un numero multiplo de 3 o de 5 de input y devuelve "FizzBuzz"
+        """
+        self.assertEqual(fizz_buzz(-15), "FizzBuzz")
+        self.assertEqual(fizz_buzz(0), "FizzBuzz")
+        self.assertEqual(fizz_buzz(15), "FizzBuzz")
