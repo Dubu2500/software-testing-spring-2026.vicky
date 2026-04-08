@@ -60,3 +60,15 @@ class TestStringCalculator(unittest.TestCase):
         with self.assertRaises(ValueError) as ctx:
             string_calculator.add("//|\n1|2,3")
         self.assertEqual(str(ctx.exception), "expected '|' but found ',' at position 3")
+
+    def test_negative_numbers_not_allowed_returns_exception(self):
+        """
+        8. Metodo que no permite numeros negativos y muestra los negativos encontrados
+        """
+        with self.assertRaises(ValueError) as ctx:
+            string_calculator.add("1,-2")
+        self.assertEqual(str(ctx.exception), "Negative number(s) not allowed: -2")
+
+        with self.assertRaises(ValueError) as ctx:
+            string_calculator.add("2,-4,-9")
+        self.assertEqual(str(ctx.exception), "Negative number(s) not allowed: -4,-9")
