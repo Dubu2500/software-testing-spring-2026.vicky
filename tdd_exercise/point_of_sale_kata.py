@@ -20,6 +20,9 @@ def scan_barcode(barcode):
     """
     Metodo que escanea un codigo de barras y devuelve el precio o el error
     """
+    # 4. Codigo de barra vacio
+    if not barcode or barcode.strip() == "":
+        return "Error: empty barcode"
 
     products = read_from_json("products")
 
