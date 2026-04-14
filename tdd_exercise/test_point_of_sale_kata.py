@@ -20,6 +20,8 @@ class TestPointOfSaleKata(unittest.TestCase):
         cls.test_data = [
             # 1. Codigo de barra '12345' -> $7.25
             {"input": "12345", "output": "$7.25"},
+            # 2. Codigo de barra '23456' -> $12.50
+            {"input": "23456", "output": "$12.50"},
         ]
 
     def test_scan_barcode(self):
