@@ -40,7 +40,9 @@ def search(str_to_search):
 
     for city in cities:
         city_lower = city.lower()
+        # Requeriment 2
         if city_lower.startswith(search_lower):
+            # Requeriment 4
             cities_found.append(city)
 
     return cities_found
