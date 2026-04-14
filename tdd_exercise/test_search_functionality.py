@@ -4,8 +4,6 @@
 Este modulo contiene las pruebas del ejercicio de search functionality para buscar ciudades
 """
 
-import json
-import os
 import unittest
 
 from search_functionality import search
@@ -18,16 +16,13 @@ class TestSearchFunctionality(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        # Load cities from JSON file
-        cities_file_path = os.path.join(os.path.dirname(__file__), "cities.json")
-        with open(cities_file_path, "r", encoding="utf-8") as f:
-            data = json.load(f)
-            cities = data["cities"]
-
         cls.test_data = [
-            # Requirement 1: < 2 characters should return no results
+            # Requerimiento 1: < 2 caracteres deben regresar no result
             {"input": "", "output": []},
             {"input": "a", "output": []},
+            # Requerimiento 2: >= 2 caracteres deberan regresar ciudades con busqueda de texto
+            {"input": "Va", "output": ["Valencia", "Vancouver"]},
+            {"input": "Pa", "output": ["Paris"]},
             # Edge cases
             {"input": "xyz", "output": []},
         ]
