@@ -23,8 +23,9 @@ def scan_barcode(barcode):
 
     products = read_from_json("products")
 
-    # 1 & 2. known barcodes
+    # 1 & 2. Codigo de barras
     if barcode in products:
         return f"${products[barcode]:.2f}"
 
-    return None
+    # 3. Codigo de barra desconocido
+    return "Error: barcode not found"
