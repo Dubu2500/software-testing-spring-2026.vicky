@@ -32,7 +32,7 @@ def scan_barcode(barcode):
         total = sum(products[bc] for bc in _scanned_barcodes)
         _scanned_barcodes = []  # reiniciar después del total
         return f"${total:.2f}"
-    
+
     products = read_from_json("products")
 
     # 1 & 2. Codigo de barras

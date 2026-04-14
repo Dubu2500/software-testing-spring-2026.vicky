@@ -4,11 +4,14 @@
 Pruebas Test Driven Development para el ejercicio Banking Kata
 """
 
-import unittest
-from unittest.mock import patch
-from io import StringIO
 import sys
+import unittest
+from io import StringIO
+from unittest.mock import patch
+
 from banking_kata import Account
+
+# pylint: disable=protected-access
 
 
 class TestBankingKata(unittest.TestCase):
@@ -47,7 +50,7 @@ class TestBankingKata(unittest.TestCase):
         self.assertEqual(self.account._transactions[1]["amount"], -100)
         self.assertEqual(self.account._transactions[1]["balance"], 900)
 
-    @patch('banking_kata.datetime')
+    @patch("banking_kata.datetime")
     def test_print_statement_output_format(self, mock_datetime):
         """
         3. Impresion del estado de cuenta: formato y orden
@@ -56,7 +59,7 @@ class TestBankingKata(unittest.TestCase):
         mock_datetime.now.return_value.strftime.side_effect = [
             "01/04/2014",
             "02/04/2014",
-            "10/04/2014"
+            "10/04/2014",
         ]
         self.account.deposit(1000)
         self.account.withdraw(100)
@@ -76,7 +79,7 @@ class TestBankingKata(unittest.TestCase):
         )
         self.assertEqual(captured_output.getvalue(), expected_output)
 
-    @patch('banking_kata.datetime')
+    @patch("banking_kata.datetime")
     def test_multiple_transactions_balance_correct(self, mock_datetime):
         """
         Prueba combinada: depositos y retiros en secuencia

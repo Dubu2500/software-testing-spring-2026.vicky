@@ -5,8 +5,11 @@ Pruebas Test Driven Development para el ejercicio Point of Sale Kata
 """
 
 import unittest
+
 import point_of_sale_kata
 from point_of_sale_kata import scan_barcode
+
+# pylint: disable=protected-access
 
 
 class TestPointOfSaleKata(unittest.TestCase):
@@ -36,28 +39,25 @@ class TestPointOfSaleKata(unittest.TestCase):
         cls.total_test_sequences = [
             {
                 "name": "Dos productos válidos",
-                "calls": [("12345", "$7.25"), ("23456", "$12.50"), ("TOTAL", "$19.75")]
+                "calls": [("12345", "$7.25"), ("23456", "$12.50"), ("TOTAL", "$19.75")],
             },
             {
                 "name": "Un solo producto",
-                "calls": [("12345", "$7.25"), ("TOTAL", "$7.25")]
+                "calls": [("12345", "$7.25"), ("TOTAL", "$7.25")],
             },
-            {
-                "name": "Sin productos escaneados",
-                "calls": [("TOTAL", "$0.00")]
-            },
+            {"name": "Sin productos escaneados", "calls": [("TOTAL", "$0.00")]},
             {
                 "name": "Producto inválido no se agrega al total",
                 "calls": [
                     ("12345", "$7.25"),
                     ("99999", "Error: barcode not found"),
-                    ("TOTAL", "$7.25")
-                ]
+                    ("TOTAL", "$7.25"),
+                ],
             },
             {
                 "name": "Múltiples productos repetidos",
-                "calls": [("12345", "$7.25"), ("12345", "$7.25"), ("TOTAL", "$14.50")]
-            }
+                "calls": [("12345", "$7.25"), ("12345", "$7.25"), ("TOTAL", "$14.50")],
+            },
         ]
 
     def test_scan_barcode(self):

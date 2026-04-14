@@ -52,4 +52,6 @@ class TestPasswordValidator(unittest.TestCase):
         """
         result = pv.validate_password("Abcdefgh12")
         self.assertFalse(result["valid"])
-        self.assertIn("password must contain at least one special character", result["errors"])
+        self.assertIn(
+            "password must contain at least one special character", result["errors"]
+        )
