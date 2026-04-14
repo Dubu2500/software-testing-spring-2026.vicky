@@ -23,6 +23,10 @@ class TestSearchFunctionality(unittest.TestCase):
             # Requerimiento 2: >= 2 caracteres deberan regresar ciudades con busqueda de texto
             {"input": "Va", "output": ["Valencia", "Vancouver"]},
             {"input": "Pa", "output": ["Paris"]},
+            # Requerimiento 3: busqueda Case insensitive
+            {"input": "va", "output": ["Valencia", "Vancouver"]},
+            {"input": "PARIS", "output": ["Paris"]},
+            {"input": "NeW", "output": ["New York City"]},
             # Edge cases
             {"input": "xyz", "output": []},
         ]
