@@ -23,4 +23,16 @@ class Account:
         Realiza un deposito
         """
         self._balance += amount
-        self._transactions.append((datetime.now().strftime("%d/%m/%Y"), amount, self._balance))
+        self._transactions.append(
+            (datetime.now().strftime("%d/%m/%Y"), amount, self._balance)
+        )
+
+    # 2. Retiro de la cuenta
+    def withdraw(self, amount: int):
+        """
+        Realiza un retiro
+        """
+        self._balance -= amount
+        self._transactions.append(
+            (datetime.now().strftime("%d/%m/%Y"), -amount, self._balance)
+        )
