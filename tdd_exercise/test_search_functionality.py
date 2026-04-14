@@ -27,6 +27,11 @@ class TestSearchFunctionality(unittest.TestCase):
             {"input": "va", "output": ["Valencia", "Vancouver"]},
             {"input": "PARIS", "output": ["Paris"]},
             {"input": "NeW", "output": ["New York City"]},
+            # Requerimiento 4: buscar texto como parte del nombre de la ciudad
+            {"input": "ape", "output": ["Budapest"]},
+            {"input": "ster", "output": ["Amsterdam"]},
+            {"input": "kok", "output": ["Bangkok"]},
+            {"input": "dam", "output": ["Rotterdam", "Amsterdam"]},
             # Edge cases
             {"input": "xyz", "output": []},
         ]
