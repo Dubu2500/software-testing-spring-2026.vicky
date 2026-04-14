@@ -36,3 +36,12 @@ class Account:
         self._transactions.append(
             (datetime.now().strftime("%d/%m/%Y"), -amount, self._balance)
         )
+
+    # 3. Imprimir estado de cuenta en consola
+    def print_statement(self):
+        """
+        Imprime el estado de cuenta con formato
+        """
+        print("DATE | AMOUNT | BALANCE")
+        for date, amount, balance in reversed(self._transactions):
+            print(f"{date} | {amount:.2f} | {balance:.2f}")
