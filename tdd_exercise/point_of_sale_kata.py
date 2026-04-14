@@ -23,7 +23,7 @@ def scan_barcode(barcode):
 
     products = read_from_json("products")
 
-    # 1
+    # 1 & 2. known barcodes
     if barcode in products:
         return f"${products[barcode]:.2f}"
 
