@@ -31,10 +31,16 @@ def search(str_to_search):
 
     cities_found = []
 
-    city_search = str_to_search
+    # Requirement 1: If search text is fewer than 2 characters, return no results
+    if len(str_to_search) < 2:
+        return cities_found
+
+    # Convert search text to lowercase for case-insensitive search (Requirement 3)
+    search_lower = str_to_search.lower()
 
     for city in cities:
-        if city_search in city:
+        city_lower = city.lower()
+        if city_lower.startswith(search_lower):
             cities_found.append(city)
 
     return cities_found
