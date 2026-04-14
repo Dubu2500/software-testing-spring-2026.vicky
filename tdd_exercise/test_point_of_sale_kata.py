@@ -22,6 +22,8 @@ class TestPointOfSaleKata(unittest.TestCase):
             {"input": "12345", "output": "$7.25"},
             # 2. Codigo de barra '23456' -> $12.50
             {"input": "23456", "output": "$12.50"},
+            # 3. Codigo de barra desconocido -> error
+            {"input": "99999", "output": "Error: barcode not found"},
         ]
 
     def test_scan_barcode(self):
