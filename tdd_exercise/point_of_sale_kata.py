@@ -26,3 +26,5 @@ def scan_barcode(barcode):
     # 1
     if barcode in products:
         return f"${products[barcode]:.2f}"
+
+    return None
