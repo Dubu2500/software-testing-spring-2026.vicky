@@ -1,0 +1,14 @@
+{
+  "name": "playwright-university-flows",
+  "version": "1.0.0",
+  "description": "BDD tests for university flows with Playwright and Cucumber (JavaScript)",
+  "scripts": {
+    "test": "cucumber-js",
+    "test:headed": "HEADED=true cucumber-js"
+  },
+  "dependencies": {
+    "@cucumber/cucumber": "^11.0.0",
+    "@playwright/test": "^1.44.0",
+    "playwright": "^1.44.0"
+  }
+}
