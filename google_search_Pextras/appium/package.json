@@ -1,0 +1,30 @@
+{
+  "name": "appium-university-search",
+  "version": "1.0.0",
+  "description": "Software Testing Course - Spring 2026 | Appium BDD+DDT university search tests",
+  "main": "index.js",
+  "scripts": {
+    "test": "cucumber-js",
+    "test:tags": "cucumber-js --tags",
+    "lint": "eslint steps/**/*.js support/**/*.js --ignore-pattern eslint.config.js",
+    "lint:fix": "eslint steps/**/*.js support/**/*.js --ignore-pattern eslint.config.js --fix"
+  },
+  "keywords": [
+    "software-testing",
+    "javascript",
+    "education",
+    "appium",
+    "bdd",
+    "cucumber"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@cucumber/cucumber": "^10.3.2",
+    "webdriverio": "^8.39.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "@eslint/js": "^8.57.0"
+  }
+}
