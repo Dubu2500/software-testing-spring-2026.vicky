@@ -82,7 +82,9 @@ Given("I am on the Google homepage", async function () {
 When("I search for {string} on Google", async function (query) {
   this.lastGoogleQuery = query;
   this.googleBlocked = false;
-  const searchBox = this.page.locator("textarea[name='q'], input[name='q']").first();
+  const searchBox = this.page
+    .locator("textarea[name='q'], input[name='q']")
+    .first();
   await searchBox.waitFor({ state: "visible", timeout: 10000 });
   await searchBox.fill(query);
   await searchBox.press("Enter");
@@ -99,8 +101,12 @@ When("I search for {string} on Google", async function (query) {
 
 When("I click on the first search result", async function () {
   if (this.googleBlocked) {
-    const fallbackUrl = UNIVERSITY_BY_QUERY[(this.lastGoogleQuery || "").toLowerCase()];
-    if (!fallbackUrl) throw new Error(`No fallback URL configured for query: ${this.lastGoogleQuery}`);
+    const fallbackUrl =
+      UNIVERSITY_BY_QUERY[(this.lastGoogleQuery || "").toLowerCase()];
+    if (!fallbackUrl)
+      throw new Error(
+        `No fallback URL configured for query: ${this.lastGoogleQuery}`,
+      );
     await this.page.goto(fallbackUrl, { waitUntil: "domcontentloaded" });
     return;
   }
@@ -112,15 +118,19 @@ When("I click on the first search result", async function () {
     return;
   }
 
-  const fallback = this.page.locator("#search a[href]:not([href*='google'])").first();
+  const fallback = this.page
+    .locator("#search a[href]:not([href*='google'])")
+    .first();
   if (await fallback.count()) {
     await fallback.click();
     await this.page.waitForLoadState("domcontentloaded");
     return;
   }
 
-  const directUrl = UNIVERSITY_BY_QUERY[(this.lastGoogleQuery || "").toLowerCase()];
-  if (!directUrl) throw new Error("Could not find search result or fallback URL.");
+  const directUrl =
+    UNIVERSITY_BY_QUERY[(this.lastGoogleQuery || "").toLowerCase()];
+  if (!directUrl)
+    throw new Error("Could not find search result or fallback URL.");
   await this.page.goto(directUrl, { waitUntil: "domcontentloaded" });
 });
 
@@ -129,7 +139,8 @@ Then("I should be on the domain {string}", async function (expectedDomain) {
   try {
     await this.page.waitForURL(`**${clean}**`, { timeout: 10000 });
   } catch {
-    const fallbackUrl = UNIVERSITY_BY_QUERY[(this.lastGoogleQuery || "").toLowerCase()];
+    const fallbackUrl =
+      UNIVERSITY_BY_QUERY[(this.lastGoogleQuery || "").toLowerCase()];
     if (fallbackUrl && fallbackUrl.includes(clean)) {
       await this.page.goto(fallbackUrl, { waitUntil: "domcontentloaded" });
     }
@@ -139,20 +150,25 @@ Then("I should be on the domain {string}", async function (expectedDomain) {
 });
 
 // ---------- FLOW 1 (mejorado) ----------
-When("I search for {string} on the university site", async function (searchText) {
-  const searchInput = await ensureSearchInputVisible(this.page);
-  if (searchInput) {
-    await searchInput.fill(searchText);
-    await searchInput.press("Enter");
-    await this.page.waitForLoadState("domcontentloaded");
-    return;
-  }
+When(
+  "I search for {string} on the university site",
+  async function (searchText) {
+    const searchInput = await ensureSearchInputVisible(this.page);
+    if (searchInput) {
+      await searchInput.fill(searchText);
+      await searchInput.press("Enter");
+      await this.page.waitForLoadState("domcontentloaded");
+      return;
+    }
 
-  // Fallback: varios sitios universitarios resuelven la búsqueda en /?s=
-  const currentUrl = new URL(this.page.url());
-  const fallbackUrl = `${currentUrl.origin}/?s=${encodeURIComponent(searchText)}`;
-  await this.page.goto(fallbackUrl, { waitUntil: "domcontentloaded" });
-});
+    // Fallback: varios sitios universitarios resuelven la búsqueda en /?s=
+    const currentUrl = new URL(this.page.url());
+    const fallbackUrl = `${currentUrl.origin}/?s=${encodeURIComponent(
+      searchText,
+    )}`;
+    await this.page.goto(fallbackUrl, { waitUntil: "domcontentloaded" });
+  },
+);
 
 Then("I should see results related to {string}", async function (expected) {
   // Detectar si es un selector CSS (contiene # . [ = ] > espacio)
@@ -170,102 +186,127 @@ Then("I should see results related to {string}", async function (expected) {
     if (hintedDomain) {
       const reduced = hintedDomain.split(".").slice(0, 2).join(".");
       const url = this.page.url().toLowerCase();
-      const bodyText = (await this.page.locator("body").innerText()).toLowerCase();
+      const bodyText = (
+        await this.page.locator("body").innerText()
+      ).toLowerCase();
       const title = (await this.page.title()).toLowerCase();
       expect(
         url.includes(reduced) ||
           bodyText.includes(reduced) ||
           bodyText.includes("beca") ||
           title.includes("beca") ||
-          bodyText.length > 100
+          bodyText.length > 100,
       ).toBeTruthy();
       return;
     }
 
-    const bodyText = (await this.page.locator("body").innerText()).toLowerCase();
+    const bodyText = (
+      await this.page.locator("body").innerText()
+    ).toLowerCase();
     expect(bodyText.includes("beca") || bodyText.length > 100).toBeTruthy();
   } else {
     // Es texto: buscar en el body
-    await expect(this.page.locator("body")).toContainText(expected, { timeout: 10000 });
+    await expect(this.page.locator("body")).toContainText(expected, {
+      timeout: 10000,
+    });
   }
 });
 
 // ---------- FLOW 2 (sin cambios) ----------
-When("I click on the link {string} that opens a new tab", async function (linkSelector) {
-  const link = this.page.locator(linkSelector).first();
-  await link.waitFor({ state: "attached", timeout: 10000 });
-  let newPage = null;
-  try {
-    [newPage] = await Promise.all([
-      this.page.context().waitForEvent("page", { timeout: 5000 }),
-      link.click({ force: true }),
-    ]);
-  } catch {
-    await link.click({ force: true });
-  }
-  if (newPage) {
-    this.page = newPage;
-  }
-  await this.page.waitForLoadState("domcontentloaded");
-});
+When(
+  "I click on the link {string} that opens a new tab",
+  async function (linkSelector) {
+    const link = this.page.locator(linkSelector).first();
+    await link.waitFor({ state: "attached", timeout: 10000 });
+    let newPage = null;
+    try {
+      [newPage] = await Promise.all([
+        this.page.context().waitForEvent("page", { timeout: 5000 }),
+        link.click({ force: true }),
+      ]);
+    } catch {
+      await link.click({ force: true });
+    }
+    if (newPage) {
+      this.page = newPage;
+    }
+    await this.page.waitForLoadState("domcontentloaded");
+  },
+);
 
-Then("I should see on the new tab the title containing {string}", async function (expectedTitle) {
-  const expected = expectedTitle.toLowerCase();
-  const title = (await this.page.title()).toLowerCase();
-  const url = this.page.url().toLowerCase();
-  const bodyText = (await this.page.locator("body").innerText()).toLowerCase();
-  const expectedMainToken = expected.split(" ").filter(Boolean)[0];
+Then(
+  "I should see on the new tab the title containing {string}",
+  async function (expectedTitle) {
+    const expected = expectedTitle.toLowerCase();
+    const title = (await this.page.title()).toLowerCase();
+    const url = this.page.url().toLowerCase();
+    const bodyText = (
+      await this.page.locator("body").innerText()
+    ).toLowerCase();
+    const expectedMainToken = expected.split(" ").filter(Boolean)[0];
 
-  const matched =
-    title.includes(expected) ||
-    url.includes(expected) ||
-    bodyText.includes(expected) ||
-    (expectedMainToken && (title.includes(expectedMainToken) || url.includes(expectedMainToken) || bodyText.includes(expectedMainToken)));
-  expect(matched || title.length > 0).toBeTruthy();
-});
+    const matched =
+      title.includes(expected) ||
+      url.includes(expected) ||
+      bodyText.includes(expected) ||
+      (expectedMainToken &&
+        (title.includes(expectedMainToken) ||
+          url.includes(expectedMainToken) ||
+          bodyText.includes(expectedMainToken)));
+    expect(matched || title.length > 0).toBeTruthy();
+  },
+);
 
 // ---------- FLOW 3 (sin cambios) ----------
-When("I open the dropdown menu {string} and select {string}", async function (menuSelector, optionSelector) {
-  const menu = this.page.locator(menuSelector).first();
-  await menu.waitFor({ state: "attached", timeout: 10000 });
-  try {
-    await menu.click({ force: true });
-  } catch {
-    await menu.evaluate((el) => el.click());
-  }
-  await this.page.waitForTimeout(500);
-
-  const optionVisible = this.page.locator(`${optionSelector}:visible`).first();
-  if (await optionVisible.count()) {
+When(
+  "I open the dropdown menu {string} and select {string}",
+  async function (menuSelector, optionSelector) {
+    const menu = this.page.locator(menuSelector).first();
+    await menu.waitFor({ state: "attached", timeout: 10000 });
     try {
-      await optionVisible.click({ force: true });
+      await menu.click({ force: true });
     } catch {
-      await optionVisible.evaluate((el) => el.click());
+      await menu.evaluate((el) => el.click());
     }
-  } else {
-    const option = this.page.locator(optionSelector).first();
-    if (await option.count()) {
+    await this.page.waitForTimeout(500);
+
+    const optionVisible = this.page
+      .locator(`${optionSelector}:visible`)
+      .first();
+    if (await optionVisible.count()) {
       try {
-        await option.click({ force: true });
+        await optionVisible.click({ force: true });
       } catch {
-        await option.evaluate((el) => el.click());
+        await optionVisible.evaluate((el) => el.click());
+      }
+    } else {
+      const option = this.page.locator(optionSelector).first();
+      if (await option.count()) {
+        try {
+          await option.click({ force: true });
+        } catch {
+          await option.evaluate((el) => el.click());
+        }
       }
     }
-  }
-  await this.page.waitForLoadState("domcontentloaded");
-});
+    await this.page.waitForLoadState("domcontentloaded");
+  },
+);
 
-Then("I should see the element {string} visible", async function (elementSelector) {
-  const element = this.page.locator(elementSelector).first();
-  if (await element.count()) {
-    await expect(element).toBeVisible({ timeout: 10000 });
-    return;
-  }
+Then(
+  "I should see the element {string} visible",
+  async function (elementSelector) {
+    const element = this.page.locator(elementSelector).first();
+    if (await element.count()) {
+      await expect(element).toBeVisible({ timeout: 10000 });
+      return;
+    }
 
-  // Fallback tolerante para sitios con DOM dinámico
-  const bodyText = await this.page.locator("body").innerText();
-  expect(bodyText.length).toBeGreaterThan(100);
-});
+    // Fallback tolerante para sitios con DOM dinámico
+    const bodyText = await this.page.locator("body").innerText();
+    expect(bodyText.length).toBeGreaterThan(100);
+  },
+);
 
 // Paso adicional (opcional)
 When("I click on the button {string}", async function (buttonSelector) {

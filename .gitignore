@@ -228,5 +228,8 @@ cypress/downloads/
 playwright-report/
 test-results/
 
+# Appium
+appium/reports/
+
 # Claude
 .claude/
