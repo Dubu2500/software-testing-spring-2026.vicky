@@ -1,4 +1,10 @@
-const { setWorldConstructor, World, Before, After, setDefaultTimeout } = require("@cucumber/cucumber");
+const {
+  setWorldConstructor,
+  World,
+  Before,
+  After,
+  setDefaultTimeout,
+} = require("@cucumber/cucumber");
 const { chromium } = require("playwright");
 
 setDefaultTimeout(60 * 1000);

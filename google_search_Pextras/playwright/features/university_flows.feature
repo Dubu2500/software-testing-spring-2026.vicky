@@ -20,11 +20,11 @@ Feature: University flows with multiple actions
 
     Examples:
       | university | search_term | expected_domain | internal_search | expected_content                          |
-      | ITESO      | iteso       | iteso.mx        | becas           | a.gs-title[data-ctorig*='becas.iteso.mx'] | 
+      | ITESO      | iteso       | iteso.mx        | becas           | a.gs-title[data-ctorig*='becas.iteso.mx'] |
       | UDG        | udg         | udg.mx          | becas           | a.gs-title[data-ctorig*='cei.udg.mx']     |
       | UNAM       | unam        | unam.mx         | becas           | a.gs-title[data-ctorig*='becas.unam.mx']  |
 
-  # FLOW 2: Hacer clic en un elemento que abre nueva pestaña 
+  # FLOW 2: Hacer clic en un elemento que abre nueva pestaña
   @flow2
   Scenario Outline: Click on element that opens a new tab
     When I search for "<search_term>" on Google
